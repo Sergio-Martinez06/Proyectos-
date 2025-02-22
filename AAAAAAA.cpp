@@ -70,7 +70,7 @@ int main() {
             if (accion == 2) {
                 if (matriz[fila][columna] == 'L') {
                     matriz[fila][columna] = 'R';
-                    cout << "El asiento " << (char)('A' + columna) << columna + 1 << fila + 1 << " ha sido reservado.\n";
+                    cout << "El asiento " << (char)('A' + columna) << columna + 1 << "-" <<fila + 1 << " ha sido reservado.\n";
                 } else if (matriz[fila][columna] == 'R') {
                     cout << "El asiento ya esta reservado.\n";
                 } else {
@@ -79,14 +79,14 @@ int main() {
             } else if (accion == 3) {
                 if (matriz[fila][columna] == 'L' || matriz[fila][columna] == 'R') {
                     matriz[fila][columna] = 'O';
-                    cout << "El asiento " << (char)('A' + columna) << columna + 1 << fila + 1 << " ha sido ocupado.\n";
+                    cout << "El asiento " << (char)('A' + columna) << columna + 1 << "-" << fila + 1 << " ha sido ocupado.\n";
                 } else {
                     cout << "El asiento ya esta ocupado.\n";
                 }
             } else if (accion == 4) {
                 if (matriz[fila][columna] == 'R') {
                     matriz[fila][columna] = 'L';
-                    cout << "La reserva del asiento " << (char)('A' + columna) << columna + 1 << fila + 1 << " ha sido cancelada.\n";
+                    cout << "La reserva del asiento " << (char)('A' + columna) << columna + 1 << "-" <<fila + 1 << " ha sido cancelada.\n";
                 } else if (matriz[fila][columna] == 'L') {
                     cout << "El asiento no esta reservado.\n";
                 } else {
@@ -100,7 +100,6 @@ int main() {
 
     return 0;
 }
-
 
 
 
