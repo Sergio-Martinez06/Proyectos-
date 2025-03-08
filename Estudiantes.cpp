@@ -6,45 +6,45 @@
 
 using namespace std;
 
-// Función para verificar si una cadena es un número decimal válido
+
 bool esNumeroDecimalValido(const string& input) {
     bool puntoDecimalEncontrado = false;
     
     for (int i = 0; i < input.length(); i++) {
         if (input[i] == '.') {
-            if (puntoDecimalEncontrado) {  // Solo debe haber un punto decimal
+            if (puntoDecimalEncontrado) {  
                 return false;
             }
             puntoDecimalEncontrado = true;
         } else if (!isdigit(input[i]) && input[i] != '.') {
-            return false;  // Solo pueden ser números y un punto decimal
+            return false;  
         }
     }
     return true;
 }
 
-// Función para leer un número decimal de forma segura
+
 bool leerNumeroDecimal(float& numero) {
     string input;
-    getline(cin, input);  // Leer toda la línea
+    getline(cin, input);  
 
-    // Verificar si la cadena es un número decimal válido
+
     if (!esNumeroDecimalValido(input)) {
         cout << "Error: Ingrese un número decimal válido.\n";
         return false;
     }
 
-    // Convertir la cadena a un número flotante
+   
     numero = stof(input);
     return true;
 }
 
-// Función para leer un número entero de forma segura
+
 bool leerNumeroEntero(int& numero) {
     string input;
-    getline(cin, input);  // Leer toda la línea
+    getline(cin, input);  
 
-    // Verificar si la cadena contiene solo dígitos
+
     for (char c : input) {
         if (!isdigit(c)) {
             cout << "Error: Ingrese un número entero válido.\n";
@@ -52,17 +52,17 @@ bool leerNumeroEntero(int& numero) {
         }
     }
 
-    // Convertir la cadena a un número entero
+ 
     numero = stoi(input);
     return true;
 }
 
-// Estructura para almacenar los datos de los padres y acudientes
+
 struct Persona {
     string nombre;
     string telefono;
 
-    // Función para ingresar nombre (solo letras y espacios)
+
     void ingresarNombre(const string& tipo) {
         while (true) {
             cout << "Ingrese el nombre del " << tipo << ": ";
@@ -79,7 +79,7 @@ struct Persona {
         }
     }
 
-    // Función para ingresar el teléfono
+ 
     void ingresarTelefono() {
         while (true) {
             cout << "Ingrese el telefono: ";
@@ -97,14 +97,14 @@ struct Persona {
     }
 };
 
-// Estructura para almacenar las materias
+
 struct Materia {
     string nombre;
     string horario;
     vector<float> notas;
 
     void ingresarNotas() {
-        notas.resize(3);  // Reservamos espacio para 3 notas
+        notas.resize(3); 
         for (int i = 0; i < 3; i++) {
             while (true) {
                 cout << "Nota del examen " << i + 1 << ": ";  
@@ -122,7 +122,7 @@ struct Materia {
     }
 };
 
-// Estructura principal del Estudiante
+
 struct Estudiante {
     string nombre;
     int edad;
@@ -131,12 +131,12 @@ struct Estudiante {
     Persona padre, madre;  
     vector<Materia> materias;
 
-    // Función para ingresar datos del estudiante
+
     void ingresarDatos() {
         cout << "Ingrese el nombre del estudiante: ";
         getline(cin, nombre);
 
-        // Validación de la edad
+
         while (true) {
             cout << "Ingrese la edad del estudiante: ";
             if (leerNumeroEntero(edad) && edad > 0) break;
@@ -165,7 +165,7 @@ struct Estudiante {
         madre.ingresarTelefono();
     }
 
-    // Función para ingresar las materias
+
     void ingresarMaterias() {
         int numMaterias;
         cout << "Ingrese el numero de materias (debe ser mayor que 0): ";
@@ -189,7 +189,7 @@ struct Estudiante {
         }
     }
 
-    // Mostrar información completa del estudiante
+
     void mostrarInformacion() const {
         cout << "\n--- Informacion del Estudiante ---\n";
         cout << "Nombre: " << nombre << "\nEdad: " << edad << "\nDireccion: " << direccion << "\nTelefono: " << telefono << "\n";
@@ -208,7 +208,7 @@ struct Estudiante {
         }
     }
 
-    // Actualizar las notas de una materia específica
+   
     void actualizarNotas() {
         cout << "Ingrese el nombre de la materia a actualizar las notas: ";
         string materiaBuscada;
@@ -226,7 +226,7 @@ struct Estudiante {
     }
 };
 
-// Función para ingresar la información de un estudiante
+
 void ingresarEstudiante(vector<Estudiante>& estudiantes) {
     Estudiante nuevoEstudiante;
     nuevoEstudiante.ingresarDatos();
@@ -234,7 +234,7 @@ void ingresarEstudiante(vector<Estudiante>& estudiantes) {
     estudiantes.push_back(nuevoEstudiante);
 }
 
-// Función para mostrar la información de todos los estudiantes
+
 void mostrarEstudiantes(const vector<Estudiante>& estudiantes) {
     if (estudiantes.empty()) {
         cout << "No hay estudiantes registrados.\n";
@@ -246,7 +246,7 @@ void mostrarEstudiantes(const vector<Estudiante>& estudiantes) {
     }
 }
 
-// Función para buscar un estudiante por nombre
+
 void buscarEstudiantePorNombre(const vector<Estudiante>& estudiantes) {
     string nombreBusqueda;
     cout << "Ingrese el nombre del estudiante a buscar: ";
@@ -284,7 +284,7 @@ bool leerOpcionMenu(int& opcion) {
     }
 }
 
-// Menú principal
+
 int main() {
     vector<Estudiante> estudiantes;
     int opcion;
@@ -294,7 +294,7 @@ int main() {
         cout << "1. Agregar nuevo estudiante\n";
         cout << "2. Mostrar todos los estudiantes\n";
 
-        // Validación para deshabilitar opciones si no hay estudiantes registrados
+       
         if (estudiantes.empty()) {
             cout << "3. Buscar estudiante por nombre (No disponible, no hay estudiantes registrados)\n";
             cout << "4. Actualizar notas de una materia (No disponible, no hay estudiantes registrados)\n";
@@ -306,7 +306,7 @@ int main() {
         cout << "5. Salir\n";
         cout << "Ingrese una opcion: ";
 
-        // Validar la opción sin espacios
+   
         if (!leerOpcionMenu(opcion)) {
             continue;  
         }
