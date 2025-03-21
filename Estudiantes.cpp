@@ -166,29 +166,30 @@ struct Estudiante {
     }
 
 
-    void ingresarMaterias() {
-        int numMaterias;
-        cout << "Ingrese el numero de materias (debe ser mayor que 0): ";
-        while (true) {
-            cin >> numMaterias;  
-            if (numMaterias > 0) break;  
-            else cout << "Error: El número de materias debe ser mayor que 0.\n";
-        }
+void ingresarMaterias() {
+    int numMaterias;
+    cout << "Ingrese el numero de materias (debe ser mayor que 0): ";
 
-        // Limpiar el buffer de entrada para evitar problemas con getline en el siguiente paso
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-
-        materias.resize(numMaterias);
-
-        for (int i = 0; i < numMaterias; i++) {
-            cout << "Ingrese el nombre de la materia " << i + 1 << ": ";
-            getline(cin, materias[i].nombre);
-            cout << "Ingrese el horario de la materia " << materias[i].nombre << ": ";
-            getline(cin, materias[i].horario);
-            materias[i].ingresarNotas();
+    while (true) {
+        if (leerNumeroEntero(numMaterias) && numMaterias > 0) {
+            break;
+        } else {
+            cout << "Error: El número de materias debe ser un entero mayor que 0.\n";
         }
     }
 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpiar el buffer
+
+    materias.resize(numMaterias);
+
+    for (int i = 0; i < numMaterias; i++) {
+        cout << "Ingrese el nombre de la materia " << i + 1 << ": ";
+        getline(cin, materias[i].nombre);
+        cout << "Ingrese el horario de la materia " << materias[i].nombre << ": ";
+        getline(cin, materias[i].horario);
+        materias[i].ingresarNotas();
+    }
+}
 
     void mostrarInformacion() const {
         cout << "\n--- Informacion del Estudiante ---\n";
