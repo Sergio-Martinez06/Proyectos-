@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 bool esNumeroDecimalValido(const string& input) {
     bool puntoDecimalEncontrado = false;
     
@@ -23,27 +22,22 @@ bool esNumeroDecimalValido(const string& input) {
     return true;
 }
 
-
 bool leerNumeroDecimal(float& numero) {
     string input;
     getline(cin, input);  
-
 
     if (!esNumeroDecimalValido(input)) {
         cout << "Error: Ingrese un número decimal válido.\n";
         return false;
     }
 
-   
     numero = stof(input);
     return true;
 }
 
-
 bool leerNumeroEntero(int& numero) {
     string input;
     getline(cin, input);  
-
 
     for (char c : input) {
         if (!isdigit(c)) {
@@ -52,16 +46,13 @@ bool leerNumeroEntero(int& numero) {
         }
     }
 
- 
     numero = stoi(input);
     return true;
 }
 
-
 struct Persona {
     string nombre;
     string telefono;
-
 
     void ingresarNombre(const string& tipo) {
         while (true) {
@@ -79,7 +70,6 @@ struct Persona {
         }
     }
 
- 
     void ingresarTelefono() {
         while (true) {
             cout << "Ingrese el telefono: ";
@@ -97,14 +87,13 @@ struct Persona {
     }
 };
 
-
 struct Materia {
     string nombre;
     string horario;
     vector<float> notas;
 
     void ingresarNotas() {
-        notas.resize(3); 
+        notas.resize(3);  
         for (int i = 0; i < 3; i++) {
             while (true) {
                 cout << "Nota del examen " << i + 1 << ": ";  
@@ -122,7 +111,6 @@ struct Materia {
     }
 };
 
-
 struct Estudiante {
     string nombre;
     int edad;
@@ -131,11 +119,9 @@ struct Estudiante {
     Persona padre, madre;  
     vector<Materia> materias;
 
-
     void ingresarDatos() {
         cout << "Ingrese el nombre del estudiante: ";
         getline(cin, nombre);
-
 
         while (true) {
             cout << "Ingrese la edad del estudiante: ";
@@ -165,31 +151,45 @@ struct Estudiante {
         madre.ingresarTelefono();
     }
 
+    void ingresarMaterias() {
+        int numMaterias;
+        cout << "Ingrese el numero de materias (debe ser mayor que 0): ";
+        while (true) {
+            string input;
+            getline(cin, input);  
 
-void ingresarMaterias() {
-    int numMaterias;
-    cout << "Ingrese el numero de materias (debe ser mayor que 0): ";
+            bool esValido = true;
+            for (char c : input) {
+                if (!isdigit(c)) {
+                    esValido = false;
+                    break;
+                }
+            }
 
-    while (true) {
-        if (leerNumeroEntero(numMaterias) && numMaterias > 0) {
-            break;
-        } else {
-            cout << "Error: El número de materias debe ser un entero mayor que 0.\n";
+            if (esValido) {
+                numMaterias = stoi(input);  
+                if (numMaterias > 0) {
+                    break;  
+                } else {
+                    cout << "Error: El número de materias debe ser mayor que 0.\n";
+                }
+            } else {
+                cout << "Error: Ingrese un número entero válido.\n";
+            }
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+
+        materias.resize(numMaterias);
+
+        for (int i = 0; i < numMaterias; i++) {
+            cout << "Ingrese el nombre de la materia " << i + 1 << ": ";
+            getline(cin, materias[i].nombre);
+            cout << "Ingrese el horario de la materia " << materias[i].nombre << ": ";
+            getline(cin, materias[i].horario);
+            materias[i].ingresarNotas();
         }
     }
-
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpiar el buffer
-
-    materias.resize(numMaterias);
-
-    for (int i = 0; i < numMaterias; i++) {
-        cout << "Ingrese el nombre de la materia " << i + 1 << ": ";
-        getline(cin, materias[i].nombre);
-        cout << "Ingrese el horario de la materia " << materias[i].nombre << ": ";
-        getline(cin, materias[i].horario);
-        materias[i].ingresarNotas();
-    }
-}
 
     void mostrarInformacion() const {
         cout << "\n--- Informacion del Estudiante ---\n";
@@ -197,11 +197,9 @@ void ingresarMaterias() {
         cout << "--- Informacion del Padre ---\nNombre: " << padre.nombre << "\nTelefono: " << padre.telefono << "\n";
         cout << "--- Informacion de la Madre ---\nNombre: " << madre.nombre << "\nTelefono: " << madre.telefono << "\n";
 
-        // Mostrar las materias y sus notas
         cout << "--- Materias ---\n";  
         for (const auto& materia : materias) {
             cout << "Materia: " << materia.nombre << "\nHorario: " << materia.horario << "\n";
-            // Mostrar las 3 notas de la materia
             for (int i = 0; i < 3; i++) {
                 cout << "Nota del examen " << i + 1 << ": " << materia.notas[i] << "\n";
             }
@@ -209,7 +207,6 @@ void ingresarMaterias() {
         }
     }
 
-   
     void actualizarNotas() {
         cout << "Ingrese el nombre de la materia a actualizar las notas: ";
         string materiaBuscada;
@@ -227,14 +224,12 @@ void ingresarMaterias() {
     }
 };
 
-
 void ingresarEstudiante(vector<Estudiante>& estudiantes) {
     Estudiante nuevoEstudiante;
     nuevoEstudiante.ingresarDatos();
     nuevoEstudiante.ingresarMaterias();
     estudiantes.push_back(nuevoEstudiante);
 }
-
 
 void mostrarEstudiantes(const vector<Estudiante>& estudiantes) {
     if (estudiantes.empty()) {
@@ -246,7 +241,6 @@ void mostrarEstudiantes(const vector<Estudiante>& estudiantes) {
         estudiante.mostrarInformacion();
     }
 }
-
 
 void buscarEstudiantePorNombre(const vector<Estudiante>& estudiantes) {
     string nombreBusqueda;
@@ -262,12 +256,10 @@ void buscarEstudiantePorNombre(const vector<Estudiante>& estudiantes) {
     cout << "Estudiante no encontrado.\n";
 }
 
-// Función para validar que la opción seleccionada no tenga espacios
 bool leerOpcionMenu(int& opcion) {
     string input;
     getline(cin, input);  
 
-    // Verificar si hay más de un número o espacios en la entrada
     if (input.find(' ') != string::npos) {
         cout << "Error: No se permiten espacios en la opción.\n";
         return false;
@@ -285,7 +277,6 @@ bool leerOpcionMenu(int& opcion) {
     }
 }
 
-
 int main() {
     vector<Estudiante> estudiantes;
     int opcion;
@@ -295,7 +286,6 @@ int main() {
         cout << "1. Agregar nuevo estudiante\n";
         cout << "2. Mostrar todos los estudiantes\n";
 
-       
         if (estudiantes.empty()) {
             cout << "3. Buscar estudiante por nombre (No disponible, no hay estudiantes registrados)\n";
             cout << "4. Actualizar notas de una materia (No disponible, no hay estudiantes registrados)\n";
@@ -307,7 +297,6 @@ int main() {
         cout << "5. Salir\n";
         cout << "Ingrese una opcion: ";
 
-   
         if (!leerOpcionMenu(opcion)) {
             continue;  
         }
@@ -359,3 +348,4 @@ int main() {
 
     return 0;
 }
+
