@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -151,8 +152,7 @@ int main() {
         
         switch (opcion) {
             case 1:
-    
-    do {
+   do {
         cout << "ID: ";
         while (!(cin >> id) || id <= 0 || lista.idExiste(id) || cin.peek() != '\n') {
             cout << "Error: El ID debe ser un número positivo y único. Intente nuevamente.\n";
@@ -160,16 +160,21 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     } while (id <= 0 || lista.idExiste(id));
-    cin.ignore();
 
-    // Validación del nombre
-    cout << "Nombre: ";
-    getline(cin, nombre);
-    while (nombre.find_first_not_of(" ") == string::npos) {
-        cout << "Error: El nombre no puede estar vacío o contener solo espacios. Intente nuevamente.\n";
+    cin.ignore(); // Limpiar el buffer antes de leer el nombre
+    
+    do {
         cout << "Nombre: ";
         getline(cin, nombre);
-    }
+
+        // Eliminar espacios en blanco al inicio y al final
+        nombre.erase(0, nombre.find_first_not_of(" \t"));
+        nombre.erase(nombre.find_last_not_of(" \t") + 1);
+
+        if (nombre.empty()) {
+            cout << "Error: El nombre no puede estar vacío o solo contener espacios. Intente nuevamente.\n";
+        }
+    } while (nombre.empty());
 
     cout << "Promedio: ";
     while (!(cin >> promedio) || promedio < 0.0 || promedio > 5.0 || cin.peek() != '\n') {
@@ -230,4 +235,3 @@ int main() {
     
     return 0;
 }
-
